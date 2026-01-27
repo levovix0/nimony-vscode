@@ -110,7 +110,7 @@ function runNimony(document: vscode.TextDocument, messages: vscode.DiagnosticCol
 
 		pushCurrentDiagnostic();
 
-		
+		messages.clear();
 		for (const file of Object.values(diagnostics)) {
 			messages.set(file.document, file.diagnostics);
 		}
