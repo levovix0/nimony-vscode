@@ -13,12 +13,6 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "nimony.helloWorld",
-        "title": "Hello World"
-      }
-    ],
     "languages": [
       {
         "id": "nim",
@@ -47,6 +41,11 @@
           "type": "string",
           "default": "nimony",
           "description": "Path to compiler (the `nimony` executable, for example, /usr/local/bin/nimony)."
+        },
+        "nimony.diagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check for errors in nim files each time they are saved."
         }
       }
     }

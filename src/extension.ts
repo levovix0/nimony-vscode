@@ -71,13 +71,16 @@ function runNimony(document: vscode.TextDocument, messages: vscode.DiagnosticCol
 
 export function activate(context: vscode.ExtensionContext) {
 	const diagnosticCollection = vscode.languages.createDiagnosticCollection('nimonyLinter');
+	const config = vscode.workspace.getConfiguration('nimony');
 
 	// todo: display errors faster via onDidChangeTextDocument and custom compiler logic
 	
 	context.subscriptions.push(
 		vscode.workspace.onDidSaveTextDocument(document => {
-			if (document.languageId === "nim") {
-				runNimony(document, diagnosticCollection);
+			if (config.get<boolean>('diagnostics')) {
+				if (document.languageId === "nim") {
+					runNimony(document, diagnosticCollection);
+				}
 			}
 		})
 	);
