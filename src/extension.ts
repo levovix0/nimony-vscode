@@ -23,7 +23,6 @@ function toLocation(file: string, lineNum: string, colNum: string): vscode.Locat
 function addLineToDiagnostics(line: string, diagnostic: { message: string, relatedInformation?: vscode.DiagnosticRelatedInformation[] }) {
 	let match;
 	if (match = line.match(/^(.*)\(.+\sin\s(.*?)\((\d+),\s*(\d+)\)\)$/)) {
-		console.log(match)
 		const [_, message, file, lineNum, colNum] = match;
 		if (!diagnostic.relatedInformation) { diagnostic.relatedInformation = [] }
 
@@ -172,13 +171,13 @@ function runNimony(document: vscode.TextDocument, outDiagnostics: vscode.Diagnos
 	const nimonyPath = config.get<string>('path') || 'nimony';
 
 	let command = nimonyPath;
-	let args = ["c", document.fileName]
+	let args = ["check", document.fileName]
 	
 	let options: ExecOptionsWithStringEncoding = {}
 	if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0]) {
 		options.cwd = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
-		args = ["c", vscode.workspace.asRelativePath(document.uri)];
+		args[1] = vscode.workspace.asRelativePath(document.uri);
 	}
 
 	let nimonyProc = spawn(command, args, options);
